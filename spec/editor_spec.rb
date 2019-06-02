@@ -48,7 +48,10 @@ describe Pry::Editor do
     end
 
     context "when no editor is detected" do
-      before { allow(Kernel).to receive(:system) }
+      before do
+        allow(ENV).to receive(:key?).and_return(false)
+        allow(Kernel).to receive(:system)
+      end
 
       %w[editor nano vi].each do |text_editor_name|
         it "shells out to find '#{text_editor_name}'" do
